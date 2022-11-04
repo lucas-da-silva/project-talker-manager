@@ -27,6 +27,8 @@ npm start
 npm test
 ```
 
+> Tests are developed by Trybe.
+
 ## Aplication
 The developed code is inside the directory [`src`](./src/), the created routes are inside the file [`index.js`](./src/index.js).
 
