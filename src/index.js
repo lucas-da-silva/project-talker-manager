@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { readTalker, findById } = require('./talkerFunctions');
+const { readTalker, findById, writeTalker } = require('./talkerFunctions');
 const generateToken = require('./generateToken');
 const {
   validateEmail,
@@ -55,8 +55,9 @@ app.post(
   validateTalk,
   validateWatchedAt,
   validateRate,
-  (req, res) => {
-    res.status(201).json(req.body);
+  async (req, res) => {
+    const talker = await writeTalker(req.body);
+    res.status(201).json(talker);
   },
 );
 
