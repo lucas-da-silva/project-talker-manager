@@ -1,6 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { readTalker, findById, writeTalker, updateTalker } = require('./talkerFunctions');
+const {
+  readTalker,
+  findById,
+  writeTalker,
+  updateTalker,
+  deleteTalker,
+} = require('./talkerFunctions');
 const generateToken = require('./generateToken');
 const {
   validateEmail,
@@ -76,6 +82,13 @@ app.put(
     res.status(200).json(talker);
   },
 );
+
+// Req 7
+app.delete('/talker/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+  await deleteTalker(Number(id));
+  res.status(204).end();
+});
 
 app.listen(PORT, () => {
   console.log('Online');

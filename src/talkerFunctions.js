@@ -39,9 +39,18 @@ const updateTalker = async (id, talker) => {
   return newTalker;
 };
 
+const deleteTalker = async (id) => {
+  const talkers = await readTalker();
+  const talkerIndex = talkers.findIndex((t) => t.id === id);
+
+  talkers.splice(talkerIndex, 1);
+  await writeFile(talkers);
+};
+
 module.exports = {
   readTalker,
   findById,
   writeTalker,
   updateTalker,
+  deleteTalker,
 };
