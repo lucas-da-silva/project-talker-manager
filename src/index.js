@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { readTalker } = require('./talkerFunctions');
+const { readTalker, findById } = require('./talkerFunctions');
+const generateToken = require('./generateToken');
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,6 +18,22 @@ app.get('/', (_request, response) => {
 app.get('/talker', async (_req, res) => {
   const talkers = await readTalker();
   res.status(200).json(talkers);
+});
+
+// Req 2
+app.get('/talker/:id', async (req, res) => {
+  const { id } = req.params;
+  const talker = await findById(Number(id));
+  
+  if (talker) return res.status(200).json(talker);
+
+  res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+});
+
+// Req 3
+app.post('/login', (req, res) => {
+  const token = generateToken();
+  res.status(200).json({ token });
 });
 
 app.listen(PORT, () => {
