@@ -6,6 +6,7 @@ const {
   writeTalker,
   updateTalker,
   deleteTalker,
+  findByQuery,
 } = require('./talkerFunctions');
 const generateToken = require('./generateToken');
 const {
@@ -33,6 +34,13 @@ app.get('/', (_request, response) => {
 // Req 1
 app.get('/talker', async (_req, res) => {
   const talkers = await readTalker();
+  res.status(200).json(talkers);
+});
+
+// Req 8
+app.get('/talker/search', validateToken, async (req, res) => {
+  const { q } = req.query;
+  const talkers = await findByQuery(q);
   res.status(200).json(talkers);
 });
 

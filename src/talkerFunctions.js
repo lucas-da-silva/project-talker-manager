@@ -47,10 +47,20 @@ const deleteTalker = async (id) => {
   await writeFile(talkers);
 };
 
+const findByQuery = async (query) => {
+  const talkers = await readTalker();
+  const filteredTalkers = talkers.filter(
+    ({ name }) => name.toLowerCase().includes(query.toLowerCase()),
+  );
+
+  return filteredTalkers;
+};
+
 module.exports = {
   readTalker,
   findById,
   writeTalker,
   updateTalker,
   deleteTalker,
+  findByQuery,
 };
